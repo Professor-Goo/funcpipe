@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "funcpipe"
+version = "0.1.0"
+description = "Functional data processing pipeline"
+authors = [{name = "Professor-Goo", email = "your-email@example.com"}]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "click>=8.0.0",
+    "pandas>=1.3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-cov>=2.0",
+    "black>=21.0",
+    "mypy>=0.910",
+    "flake8>=4.0",
+]
+
+[project.scripts]
+funcpipe = "funcpipe.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Professor-Goo/funcpipe"
+Repository = "https://github.com/Professor-Goo/funcpipe"

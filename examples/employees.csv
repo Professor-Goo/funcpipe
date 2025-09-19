@@ -1,0 +1,9 @@
+name,age,salary,department,active
+Alice Johnson,30,50000,Engineering,true
+Bob Smith,25,45000,Marketing,true
+Charlie Brown,35,60000,Engineering,true
+Diana Prince,28,52000,Sales,false
+Eve Adams,32,55000,Marketing,true
+Frank Wilson,29,48000,Sales,true
+Grace Lee,31,58000,Engineering,false
+Henry Davis,27,46000,Marketing,true

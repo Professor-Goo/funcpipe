@@ -1,0 +1,37 @@
+[
+  {
+    "product_name": "Laptop",
+    "price": 999.99,
+    "category": "Electronics",
+    "in_stock": true,
+    "quantity": 50
+  },
+  {
+    "product_name": "Mouse",
+    "price": 25.50,
+    "category": "Electronics",
+    "in_stock": true,
+    "quantity": 200
+  },
+  {
+    "product_name": "Desk Chair",
+    "price": 159.99,
+    "category": "Furniture",
+    "in_stock": false,
+    "quantity": 0
+  },
+  {
+    "product_name": "Monitor",
+    "price": 299.99,
+    "category": "Electronics",
+    "in_stock": true,
+    "quantity": 25
+  },
+  {
+    "product_name": "Keyboard",
+    "price": 79.99,
+    "category": "Electronics",
+    "in_stock": true,
+    "quantity": 150
+  }
+]
