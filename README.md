@@ -9,6 +9,7 @@ A functional data processing pipeline that transforms CSV/JSON data using compos
 - **Composable Pipeline**: Chain filters, maps, and reductions
 - **Type-Safe**: Built with functional programming best practices
 - **CLI & Library**: Use as command-line tool or import as Python library
+- **Web UI**: Interactive browser-based pipeline builder (optional)
 
 ## Quick Start
 
@@ -25,8 +26,18 @@ funcpipe users.csv --filter "active == true" --map "format_email" --save cleaned
 
 ## Installation
 
+### Core Library
+
 ```bash
 pip install -e .
+```
+
+### Web UI (Optional)
+
+To use the interactive web interface:
+
+```bash
+pip install -r requirements-ui.txt
 ```
 
 ## Library Usage
@@ -43,6 +54,39 @@ pipeline = Pipeline() \
 # Process data
 result = pipeline.run(data)
 ```
+
+## Web UI
+
+FuncPipe includes an optional interactive web interface for building pipelines visually.
+
+### Launch the Web UI
+
+```bash
+streamlit run funcpipe_ui/app.py
+```
+
+### Web UI Features
+
+- **📁 File Upload**: Upload CSV/JSON files or try example datasets
+- **🔧 Visual Pipeline Builder**: Point-and-click interface for adding operations
+- **📊 Real-time Preview**: See data changes at each pipeline stage
+- **📈 Data Analysis**: Built-in statistics and visualizations
+- **💾 Export Options**: Download results or generate Python code
+- **🚀 No Coding Required**: Build complex pipelines through the UI
+
+### Quick Start with Web UI
+
+1. Launch the web interface: `streamlit run funcpipe_ui/app.py`
+2. Upload your data file or try an example dataset
+3. Add filters, transforms, and other operations using the visual builder
+4. Preview results in real-time as you build your pipeline
+5. Export processed data or generate Python code for reuse
+
+The web UI is perfect for:
+- Learning how FuncPipe works
+- Building pipelines without writing code
+- Exploring your data interactively
+- Sharing pipeline configurations with team members
 
 ## Architecture
 
@@ -63,6 +107,9 @@ mypy funcpipe/
 
 # Format code
 black funcpipe/
+
+# Run web UI for development
+streamlit run funcpipe_ui/app.py
 ```
 
 ## License
