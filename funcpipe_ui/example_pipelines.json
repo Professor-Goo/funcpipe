@@ -1,0 +1,196 @@
+{
+  "example_pipelines": [
+    {
+      "name": "Clean Employee Data",
+      "description": "Filter active employees, capitalize names, and add bonus",
+      "operations": [
+        {
+          "type": "filter",
+          "filter_type": "equals",
+          "config": {
+            "field": "active",
+            "filter_type": "equals",
+            "value": true
+          },
+          "description": "Keep records where active = True"
+        },
+        {
+          "type": "filter",
+          "filter_type": "greater_than",
+          "config": {
+            "field": "age",
+            "filter_type": "greater_than",
+            "value": 25
+          },
+          "description": "Keep records where age > 25"
+        },
+        {
+          "type": "transform",
+          "transform_type": "capitalize_field",
+          "config": {
+            "field": "name",
+            "transform_type": "capitalize_field"
+          },
+          "description": "Capitalize name"
+        },
+        {
+          "type": "transform",
+          "transform_type": "multiply_field",
+          "config": {
+            "field": "salary",
+            "value": 1.05,
+            "transform_type": "multiply_field"
+          },
+          "description": "Multiply salary by 1.05"
+        },
+        {
+          "type": "transform",
+          "transform_type": "add_field",
+          "config": {
+            "field_name": "bonus",
+            "value": 2000,
+            "transform_type": "add_field"
+          },
+          "description": "Add field 'bonus' with value '2000'"
+        },
+        {
+          "type": "sort",
+          "config": {
+            "field": "salary",
+            "reverse": true
+          },
+          "description": "Sort by salary (desc)"
+        }
+      ],
+      "metadata": {
+        "created": "2024-01-01",
+        "version": "1.0",
+        "category": "Data Cleaning"
+      }
+    },
+    {
+      "name": "Product Analysis",
+      "description": "Analyze electronics inventory and calculate total values",
+      "operations": [
+        {
+          "type": "filter",
+          "filter_type": "equals",
+          "config": {
+            "field": "category",
+            "filter_type": "equals",
+            "value": "Electronics"
+          },
+          "description": "Keep records where category = Electronics"
+        },
+        {
+          "type": "filter",
+          "filter_type": "equals",
+          "config": {
+            "field": "in_stock",
+            "filter_type": "equals",
+            "value": true
+          },
+          "description": "Keep records where in_stock = True"
+        },
+        {
+          "type": "transform",
+          "transform_type": "compute_field",
+          "config": {
+            "field_name": "total_value",
+            "expression": "item['price'] * item['quantity']",
+            "transform_type": "compute_field"
+          },
+          "description": "Compute new field 'total_value'"
+        },
+        {
+          "type": "transform",
+          "transform_type": "round_field",
+          "config": {
+            "field": "total_value",
+            "decimals": 2,
+            "transform_type": "round_field"
+          },
+          "description": "Round total_value to 2 decimal places"
+        },
+        {
+          "type": "sort",
+          "config": {
+            "field": "total_value",
+            "reverse": true
+          },
+          "description": "Sort by total_value (desc)"
+        }
+      ],
+      "metadata": {
+        "created": "2024-01-01",
+        "version": "1.0",
+        "category": "Analysis"
+      }
+    },
+    {
+      "name": "Sales Data Processing",
+      "description": "Clean and analyze sales data by region",
+      "operations": [
+        {
+          "type": "filter",
+          "filter_type": "greater_than",
+          "config": {
+            "field": "amount",
+            "filter_type": "greater_than",
+            "value": 50
+          },
+          "description": "Keep records where amount > 50"
+        },
+        {
+          "type": "transform",
+          "transform_type": "capitalize_field",
+          "config": {
+            "field": "customer",
+            "transform_type": "capitalize_field"
+          },
+          "description": "Capitalize customer"
+        },
+        {
+          "type": "transform",
+          "transform_type": "capitalize_field",
+          "config": {
+            "field": "product",
+            "transform_type": "capitalize_field"
+          },
+          "description": "Capitalize product"
+        },
+        {
+          "type": "transform",
+          "transform_type": "compute_field",
+          "config": {
+            "field_name": "quarter",
+            "expression": "item['date'].split('-')[1] if '-' in item['date'] else 'Unknown'",
+            "transform_type": "compute_field"
+          },
+          "description": "Compute new field 'quarter'"
+        },
+        {
+          "type": "sort",
+          "config": {
+            "field": "amount",
+            "reverse": true
+          },
+          "description": "Sort by amount (desc)"
+        },
+        {
+          "type": "limit",
+          "config": {
+            "operation": "take",
+            "value": 10
+          },
+          "description": "Take first 10 records"
+        }
+      ],
+      "metadata": {
+        "created": "2024-01-01",
+        "version": "1.0",
+        "category": "Sales Analysis"
+      }
+    }
+  ]
+}
