@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: funcpipe-api
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - HOST=0.0.0.0
+      - PORT=8000
+      - RELOAD=false
+      - LOG_LEVEL=INFO
+      - LOG_FORMAT=json
+    volumes:
+      # Mount storage for persistence
+      - ./storage:/app/storage
+      # Mount funcpipe library
+      - ../funcpipe:/funcpipe:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+  # Optional: Add Redis for caching (Phase 2)
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: funcpipe-redis
+  #   ports:
+  #     - "6379:6379"
+  #   restart: unless-stopped
+
+  # Optional: Add PostgreSQL for production database (Phase 2)
+  # postgres:
+  #   image: postgres:15-alpine
+  #   container_name: funcpipe-postgres
+  #   environment:
+  #     - POSTGRES_DB=funcpipe
+  #     - POSTGRES_USER=funcpipe
+  #     - POSTGRES_PASSWORD=changeme
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   restart: unless-stopped
+
+volumes:
+  postgres_data:
