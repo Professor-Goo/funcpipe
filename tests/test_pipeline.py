@@ -49,7 +49,7 @@ class TestPipeline(unittest.TestCase):
         """Test multiplying numeric field."""
         pipeline = Pipeline().map(transforms.multiply_field('salary', 1.1))
         result = pipeline.run(self.sample_data)
-        self.assertEqual(result[0]['salary'], 55000.0)  # Alice: 50000 * 1.1
+        self.assertAlmostEqual(result[0]['salary'], 55000.0, places=5)
     
     def test_chained_operations(self):
         """Test chaining multiple operations."""
