@@ -335,11 +335,71 @@ def _calculate_field_statistics(data: List[Dict[str, Any]]) -> Dict[str, Dict[st
     return field_stats
 
 
+def _render_statistics_visualizations(data: List[Dict[str, Any]], field_stats: Dict[str, Dict[str, Any]]) -> None:
+    """Render visualizations for field statistics."""
+    if not data or not field_stats:
+        return
+
+    st.write("**Field Visualizations:**")
+
+    # Separate numeric and categorical fields
+    numeric_fields = [field for field, stats in field_stats.items() if stats['type'] in ['int', 'float']]
+    categorical_fields = [field for field, stats in field_stats.items() if stats['type'] == 'str']
+
+    # Numeric field visualizations
+    if numeric_fields:
+        selected_numeric = st.selectbox("Select numeric field to visualize:", numeric_fields, key="stats_numeric_field")
+
+        if selected_numeric:
+            values = [item[selected_numeric] for item in data if item.get(selected_numeric) is not None]
+            if values:
+                fig = px.histogram(
+                    x=values,
+                    title=f"Distribution of {selected_numeric}",
+                    nbins=30,
+                    labels={'x': selected_numeric, 'y': 'Count'}
+                )
+                st.plotly_chart(fig, use_container_width=True)
+
+    # Categorical field visualizations
+    if categorical_fields:
+        selected_categorical = st.selectbox("Select categorical field to visualize:", categorical_fields, key="stats_categorical_field")
+
+        if selected_categorical:
+            values = [str(item[selected_categorical]) for item in data if item.get(selected_categorical) is not None and item[selected_categorical] != '']
+            if values:
+                # Count unique values
+                value_counts = {}
+                for value in values:
+                    value_counts[value] = value_counts.get(value, 0) + 1
+
+                # Sort by count and take top 10
+                sorted_counts = sorted(value_counts.items(), key=lambda x: x[1], reverse=True)[:10]
+
+                if sorted_counts:
+                    fig = go.Figure(data=[
+                        go.Bar(
+                            x=[item[0] for item in sorted_counts],
+                            y=[item[1] for item in sorted_counts],
+                            text=[item[1] for item in sorted_counts],
+                            textposition='auto',
+                        )
+                    ])
+
+                    fig.update_layout(
+                        title=f"Top Values for {selected_categorical}",
+                        xaxis_title=selected_categorical,
+                        yaxis_title="Count"
+                    )
+
+                    st.plotly_chart(fig, use_container_width=True)
+
+
 def _calculate_data_completeness(data: List[Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
     """Calculate data completeness for each field."""
     if not data:
         return {}
-    
+
     completeness = {}
     total_records = len(data)
     
